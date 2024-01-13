@@ -32,6 +32,16 @@ public class AuthController {
 
     @GetMapping("/secured")
     public String secured(@AuthenticationPrincipal UserPrincipal userPrincipal){
-        return "if you see this, then you're logged in as email: "+userPrincipal.getEmail()+" ,userId: "+userPrincipal.getUserId();
+        return "if you see this, then you're logged in as email: "+userPrincipal.getEmail()+" role: "+userPrincipal.getGrantedAuthorities().toString()+" ,userId: "+userPrincipal.getUserId();
+    }
+
+    @GetMapping("/admin")
+    public String adminOnly(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        return "Great! "+userPrincipal.getEmail()+" you are and admin!"  ;
+    }
+
+    @GetMapping("/user")
+    public String userOnly(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        return "Great! "+userPrincipal.getEmail()+" you are and user!"  ;
     }
 }

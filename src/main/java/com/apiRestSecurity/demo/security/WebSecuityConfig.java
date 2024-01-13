@@ -32,6 +32,9 @@ public class WebSecuityConfig {
                         registry
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/auth/login").permitAll()
+                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                .requestMatchers("/user/**").hasAuthority("USER")
+                                .requestMatchers("/secured").hasAnyAuthority("ADMIN","USER")
                                 .anyRequest().authenticated());
         return http.build();
 

@@ -18,12 +18,12 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtDecoder jwtDecoder;
-    private final JwtIUserPrincipalConverter jwtIUserPrincipalConverter;
+    private final JwtUserPrincipalConverter jwtUserPrincipalConverter;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         extractTokenFromRequest(request)
                 .map(jwtDecoder::decode)
-                .map(jwtIUserPrincipalConverter::convert)
+                .map(jwtUserPrincipalConverter::convert)
                 .map(UserPrincipalAuthenticationToken::new)
                 .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
         filterChain.doFilter(request,response);
